@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InTheDogHouse06FEBAttempt; //NEEDS CHECKED SB06FEB
-
+namespace InTheDogHouse06FEBAttempt //CHECKING 07FEB..
+{
 class MyCustomer
 {
     private int customerNo;
@@ -14,10 +14,10 @@ class MyCustomer
     public MyCustomer()
     { //BLANK CONSTRUCTOR, takes nothing in
         this.customerNo = 0;
-        this.title = "", this.surname = "", this.forename = ""; this.street = ""; this.town = ""; this.county = ""; this.postcode = ""; this.telNo = "";
+        this.title = ""; this.surname = ""; this.forename = ""; this.street = ""; this.town = ""; this.county = ""; this.postcode = ""; this.telNo = "";
     }
-
-    public MyCustomer(int customerNo, string title, string surname, string forename, string street, string, town, stirng county, string postcode, string telNo)
+        
+    public MyCustomer(int customerNo, string title, string surname, string forename, string street, string town, string county, string postcode, string telNo)
     { //SPECIFIED CONSTRUCTOR, takes input values with data type 
         this.customerNo = customerNo;
         this.title = title; this.surname = surname; this.forename = forename; this.street = street; this.town = town; this.county = county; this.postcode = postcode; this.telNo = telNo;
@@ -25,8 +25,8 @@ class MyCustomer
 
     public int customerNo
     {  //GETTERS SETTERS
-        get { return customerNo; }
-        set { customerNo = value; }
+        get {return customerNo;}
+        set {customerNo = value;}
     }
 
     public string Title
@@ -34,7 +34,7 @@ class MyCustomer
         get {return title;}
         set
         {
-            if (value.ToUppe() != "MR" && value.ToUpper() != "MRS" && value.ToUpper() != "MISS" && value.ToUpper() != "MS")
+            if (value.ToUpper() != "MR" && value.ToUpper() != "MRS" && value.ToUpper() != "MISS" && value.ToUpper() != "MS")
                 throw new MyException("Title must be Mr, Mrs, Miss or Ms.");
             else
                 title = MyValidation.firstLetterEachWordToUpper(value);
@@ -48,7 +48,7 @@ class MyCustomer
         {
             if (MyValidation.validLength(value, 2, 15) && MyValidation.validSurname(value))
             {
-                surname = MyValidation.firstLetterEachWordtoUpper(value);
+                surname = MyValidation.firstLetterEachWordToUpper(value);
             }
             else
                 throw new MyException("Surname must be 2-15 letters");
@@ -57,7 +57,7 @@ class MyCustomer
 
     public string Forename
     {
-        get { return foename; }
+        get { return forename; }
         set
         {
             if (MyValidation.validLength(value, 2, 15) && MyValidation.validForename(value))
@@ -107,7 +107,7 @@ class MyCustomer
                 county = MyValidation.firstLetterEachWordToUpper(value);
             }
             else
-                throw new MyExceptiopn("County must be 2-20 letters");
+                throw new MyException("County must be 2-20 letters");
         }
     }
     
@@ -121,7 +121,7 @@ class MyCustomer
                 postcode = MyValidation.EachLetterToUpper(value);
             }
             else
-                throw new MyExceptiopn("Postcode must be 7-8 letters and alphanumeric onlys");
+                throw new MyException("Postcode must be 7-8 letters and alphanumeric onlys");
         }
     }
 
@@ -135,7 +135,7 @@ class MyCustomer
                 telNo = value;
             }
             else
-                throw new MyExceptiopn("Telephone number must be 11-15 digits");
+                throw new MyException("Telephone number must be 11-15 digits");
         }
      }
 

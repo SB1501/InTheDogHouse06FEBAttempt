@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InTheDogHouse06DEBAttempt //NEEDS CHECKED SB 06FEB
+
+namespace InTheDogHouse06FEBAttempt //CHECKED 07FEB
 {
     class MyException : Exception 
     {
