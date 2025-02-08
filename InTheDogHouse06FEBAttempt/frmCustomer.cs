@@ -56,7 +56,7 @@ namespace InTheDogHouse06FEBAttempt
         private System.Windows.Forms.TextBox txtEditForename;
         private System.Windows.Forms.TextBox txtEditSurname;
         private System.Windows.Forms.ComboBox cboEditTitle;
-        private System.Windows.Forms.Label lblEditCustomerNumber;
+        private System.Windows.Forms.Label lblEditCustNo;
         private System.Windows.Forms.Label lblEditTelNo;
         private System.Windows.Forms.Label lblEditPostcode;
         private System.Windows.Forms.Label lblEditCounty;
@@ -65,7 +65,6 @@ namespace InTheDogHouse06FEBAttempt
         private System.Windows.Forms.Label lblEditForename;
         private System.Windows.Forms.Label lblEditSurname;
         private System.Windows.Forms.Label lblEditTitle;
-        private System.Windows.Forms.Label
                     
             
         //DECLARING VARIABLES
@@ -85,8 +84,8 @@ namespace InTheDogHouse06FEBAttempt
         
 
         private void frmCustomer_Load(object sender, EventArgs e)
-        {
-            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#65BFFA5A\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
+        {                                           //UPDATE PIPE IF CONNECTION ISSUE OCCURS
+            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#BC9A78F5\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
 
             string sqlCustomer = @"SELECT * FROM Customer";
             daCustomer = new SqlDataAdapter(sqlCustomer, SqlConnectionStringBuilder);
@@ -140,7 +139,7 @@ namespace InTheDogHouse06FEBAttempt
             {
 
                 myCustomer.CustomerNo = Convert.ToInt32(lblAddCustomerNumber.Text.Trim());
-                //passed to CUstomer class to check
+                //passed to Customer class to check
             }
             catch (MyException MyEx)
             {
@@ -243,7 +242,7 @@ namespace InTheDogHouse06FEBAttempt
                 if (ok)
                 {
                     drCustomer = dsInTheDogHouse.Tables["Customer"].NewRow();
-                    drCustomer["CustomerNo"] = myCustomer.customerNo;
+                    drCustomer["CustomerNo"] = myCustomer.CustomerNo;
                     drCustomer["Title"] = myCustomer.Title;
                     drCustomer["Forename"] = myCustomer.Forename;
                     drCustomer["Surname]"] = myCustomer.Surname;
@@ -254,7 +253,7 @@ namespace InTheDogHouse06FEBAttempt
                     drCustomer["TelNo"] = myCustomer.TelNo;
 
                     dsInTheDogHouse.Tables["Customer"].Rows.Add(drCustomer);
-                    dsCustomer.Update(dsInTheDogHouse, "Customer");
+                    daCustomer.Update(dsInTheDogHouse, "Customer");
 
                     MessageBox.Show("Customer Added");
 
@@ -289,11 +288,11 @@ namespace InTheDogHouse06FEBAttempt
         private void getNumber(int noRows)
         {
             drCustomer = dsInTheDogHouse.Tables["Customer"].Rows[noRows - 1];
-            lblAddCustNo.Text = (int.Parse(drCustomer["CustomerNo"].ToString()) + 1).ToString();
-        }
+            lblAddCustomerNumber.Text = (int.Parse(drCustomer["CustomerNo"].ToString()) + 1).ToString();
+        }       //CHANGED 08FEB 22:12 REVERTPOINTSB
 
-        private void tabCustomerDisplay_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {   //CHANGED 08FEB 22:13 REVERTPOINTSB
             selectedTab = tabControl.SelectedIndex;
 
             tabControl.TabPages[tabControl.SelectedIndex].Focus();
@@ -342,13 +341,13 @@ namespace InTheDogHouse06FEBAttempt
                             drCustomer = dsInTheDogHouse.Tables["Customer"].Rows.Find(lblEditCustomerNumber.Text);
 
                             if (drCustomer["Title"].ToString() == "Mr")
-                                cboEditTitle = 0;
+                                cboEditTitle.SelectedIndex = 0;
                             if (drCustomer["Title"].ToString() == "Mrs")
-                                cboEditTitle = 1;
+                                cboEditTitle.SelectedIndex = 1;
                             if (drCustomer["Title"].ToString() == "Miss")
-                                cboEditTitle = 2;
+                                cboEditTitle.SelectedIndex = 2;
                             if (drCustomer["Title"].ToString() == "Ms")
-                                cboEditTitle = 3;
+                                cboEditTitle.SelectedIndex = 3;
 
                             txtEditForename.Text = drCustomer["Forename"].ToString();
                             txtEditSurname.Text = drCustomer["Surname"].ToString();
@@ -400,6 +399,10 @@ namespace InTheDogHouse06FEBAttempt
         {
             tabControl.TabPages[0].CausesValidation = true;
             tabControl.TabPages[0].Validating += new
+                CancelEventHandler(AddTabValidate);
+
+            tabControl.TabPages[0].CausesValidation = true;
+            tabControl.TabPages[0].Validating += new
                 CancelEventHandler(EditTabValidate);
         }
 
@@ -415,11 +418,11 @@ namespace InTheDogHouse06FEBAttempt
                 txtEditPostcode.Enabled = true;
                 txtEditTelNo.Enabled = true;
 
-                btnEditEdit.Text = "Save"; //might need changed bc button
+                btnEditEdit.Text = "Save"; //different bc i have a button not a button and separate label as in example code
             }
             else
             {
-                MyCustomer myCustoner = new MyCustomer();
+                MyCustomer myCustomer = new MyCustomer();
                 bool ok = true;
                 errP.Clear();
 
@@ -431,7 +434,7 @@ namespace InTheDogHouse06FEBAttempt
                 catch (MyException MyEx)
                 {
                     ok = false;
-                    errP.SetError(lblEditCustomerNumber, MyEx.toString());
+                    errP.SetError(lblEditCustNo, MyEx.toString());
                 }
                 try
                 {
@@ -557,9 +560,10 @@ namespace InTheDogHouse06FEBAttempt
             }
             else
             {
-                drCustomer = dsInTheDogHouse.Tables["Customer"].Rows.Find(dgvCustomer.SelectedRows[0].Cells[0].Value);
+                drCustomer = 
+             dsInTheDogHouse.Tables["Customer"].Rows.Find(dgvCustomer.SelectedRows[0].Cells[0].Value);
 
-                string tempName = drCustomer["Forename"].ToString() + "" + drCustomer["Surname"].ToString() + "\'s";
+                string tempName = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString() + "\'s";
 
                 if (MessageBox.Show("Are you sure you want to delete" + tempName + " details?", "Add Customer", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                         {
@@ -571,27 +575,32 @@ namespace InTheDogHouse06FEBAttempt
 
         private void btnAddCancel_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Cancel the addition of Customer No: " + lblAddCustNo.Text + "?", "Add Customer", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            if (MessageBox.Show("Cancel the addition of Customer No: " + lblAddCustomerNumber.Text + "?", "Add Customer", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 tabControl.SelectedIndex = 0;
         }
 
         private void btnDisplayAdd_Click(object sender, EventArgs e)
         {
-            tabControl.SelectedIndex = 0;
+            tabControl.SelectedIndex = 1; //CHANGED FEB08 22:45 REVERTPOINT SB
         }
 
         private void btnDisplayEdit_Click(object sender, EventArgs e)
         {
-            tabControl.SelectedIndex = 1;
+            tabControl.SelectedIndex = 2;
         }
         private void dgvCustomer_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
+        private void btnDisplayExit_Click(object sender, EventArgs e)
+        {
+            this.Close(); //closes the form
+        }
+
         private void btnEditCancel_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Cancel the edit of Customer No: " + btnEditCancel.Text + "?", "Edit Customer", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            if (MessageBox.Show("Cancel the edit of Customer No: " + lblEditCustomerNumber.Text + "?", "Edit Customer", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 tabControl.SelectedIndex = 0;
         }
     }

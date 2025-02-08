@@ -18,6 +18,7 @@ namespace InTheDogHouse06FEBAttempt
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new frmCustomer());
         }
     }
 }

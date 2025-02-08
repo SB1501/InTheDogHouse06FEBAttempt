@@ -23,7 +23,7 @@ class MyCustomer
         this.title = title; this.surname = surname; this.forename = forename; this.street = street; this.town = town; this.county = county; this.postcode = postcode; this.telNo = telNo;
     }
 
-    public int customerNo
+    public int CustomerNo
     {  //GETTERS SETTERS
         get {return customerNo;}
         set {customerNo = value;}

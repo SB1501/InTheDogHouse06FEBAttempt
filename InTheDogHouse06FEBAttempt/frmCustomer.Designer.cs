@@ -67,6 +67,7 @@ namespace InTheDogHouse06FEBAttempt
             this.lblEditForename = new System.Windows.Forms.Label();
             this.lblEditSurname = new System.Windows.Forms.Label();
             this.lblEditTitle = new System.Windows.Forms.Label();
+            this.lblEditCustNo = new System.Windows.Forms.Label();
             this.lblEditCustomerNumber = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -100,6 +101,7 @@ namespace InTheDogHouse06FEBAttempt
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1228, 517);
             this.tabControl.TabIndex = 1;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabDisplay
             // 
@@ -124,6 +126,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnDisplayExit.TabIndex = 4;
             this.btnDisplayExit.Text = "Exit";
             this.btnDisplayExit.UseVisualStyleBackColor = true;
+            this.btnDisplayExit.Click += new System.EventHandler(this.btnDisplayExit_Click);
             // 
             // btnDisplayDelete
             // 
@@ -133,6 +136,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnDisplayDelete.TabIndex = 3;
             this.btnDisplayDelete.Text = "Delete";
             this.btnDisplayDelete.UseVisualStyleBackColor = true;
+            this.btnDisplayDelete.Click += new System.EventHandler(this.btnDisplayDelete_Click);
             // 
             // btnDisplayEdit
             // 
@@ -142,6 +146,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnDisplayEdit.TabIndex = 2;
             this.btnDisplayEdit.Text = "Edit";
             this.btnDisplayEdit.UseVisualStyleBackColor = true;
+            this.btnDisplayEdit.Click += new System.EventHandler(this.btnDisplayEdit_Click);
             // 
             // btnDisplayAdd
             // 
@@ -151,6 +156,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnDisplayAdd.TabIndex = 1;
             this.btnDisplayAdd.Text = "Add";
             this.btnDisplayAdd.UseVisualStyleBackColor = true;
+            this.btnDisplayAdd.Click += new System.EventHandler(this.btnDisplayAdd_Click);
             // 
             // dgvCustomer
             // 
@@ -162,6 +168,7 @@ namespace InTheDogHouse06FEBAttempt
             this.dgvCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCustomer.Size = new System.Drawing.Size(915, 468);
             this.dgvCustomer.TabIndex = 0;
+            this.dgvCustomer.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomer_CellContentClick);
             // 
             // tabAdd
             // 
@@ -201,6 +208,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnAddCancel.TabIndex = 19;
             this.btnAddCancel.Text = "Cancel";
             this.btnAddCancel.UseVisualStyleBackColor = true;
+            this.btnAddCancel.Click += new System.EventHandler(this.btnAddCancel_Click);
             // 
             // btnAddAdd
             // 
@@ -210,6 +218,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnAddAdd.TabIndex = 18;
             this.btnAddAdd.Text = "Add";
             this.btnAddAdd.UseVisualStyleBackColor = true;
+            this.btnAddAdd.Click += new System.EventHandler(this.btnAddAdd_Click);
             // 
             // txtAddTelNo
             // 
@@ -368,6 +377,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // tabEdit
             // 
+            this.tabEdit.Controls.Add(this.lblEditCustomerNumber);
             this.tabEdit.Controls.Add(this.btnEditCancel);
             this.tabEdit.Controls.Add(this.btnEditEdit);
             this.tabEdit.Controls.Add(this.txtEditTelNo);
@@ -386,7 +396,7 @@ namespace InTheDogHouse06FEBAttempt
             this.tabEdit.Controls.Add(this.lblEditForename);
             this.tabEdit.Controls.Add(this.lblEditSurname);
             this.tabEdit.Controls.Add(this.lblEditTitle);
-            this.tabEdit.Controls.Add(this.lblEditCustomerNumber);
+            this.tabEdit.Controls.Add(this.lblEditCustNo);
             this.tabEdit.Location = new System.Drawing.Point(8, 39);
             this.tabEdit.Name = "tabEdit";
             this.tabEdit.Size = new System.Drawing.Size(1212, 470);
@@ -402,6 +412,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnEditCancel.TabIndex = 39;
             this.btnEditCancel.Text = "Cancel";
             this.btnEditCancel.UseVisualStyleBackColor = true;
+            this.btnEditCancel.Click += new System.EventHandler(this.btnEditCancel_Click);
             // 
             // btnEditEdit
             // 
@@ -411,6 +422,7 @@ namespace InTheDogHouse06FEBAttempt
             this.btnEditEdit.TabIndex = 38;
             this.btnEditEdit.Text = "Edit";
             this.btnEditEdit.UseVisualStyleBackColor = true;
+            this.btnEditEdit.Click += new System.EventHandler(this.btnEditEdit_Click);
             // 
             // txtEditTelNo
             // 
@@ -546,14 +558,23 @@ namespace InTheDogHouse06FEBAttempt
             this.lblEditTitle.TabIndex = 21;
             this.lblEditTitle.Text = "Title";
             // 
+            // lblEditCustNo
+            // 
+            this.lblEditCustNo.AutoSize = true;
+            this.lblEditCustNo.Location = new System.Drawing.Point(25, 43);
+            this.lblEditCustNo.Name = "lblEditCustNo";
+            this.lblEditCustNo.Size = new System.Drawing.Size(137, 25);
+            this.lblEditCustNo.TabIndex = 20;
+            this.lblEditCustNo.Text = "Customer No";
+            // 
             // lblEditCustomerNumber
             // 
             this.lblEditCustomerNumber.AutoSize = true;
-            this.lblEditCustomerNumber.Location = new System.Drawing.Point(25, 43);
+            this.lblEditCustomerNumber.Location = new System.Drawing.Point(232, 39);
             this.lblEditCustomerNumber.Name = "lblEditCustomerNumber";
-            this.lblEditCustomerNumber.Size = new System.Drawing.Size(137, 25);
-            this.lblEditCustomerNumber.TabIndex = 20;
-            this.lblEditCustomerNumber.Text = "Customer No";
+            this.lblEditCustomerNumber.Size = new System.Drawing.Size(84, 25);
+            this.lblEditCustomerNumber.TabIndex = 40;
+            this.lblEditCustomerNumber.Text = "000000";
             // 
             // frmCustomer
             // 
@@ -576,5 +597,6 @@ namespace InTheDogHouse06FEBAttempt
         }
 
         private IContainer components;
+        private Label lblEditCustomerNumber;
     }
 }
