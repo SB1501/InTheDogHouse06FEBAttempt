@@ -8,7 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace InTheDogHouse06FEBAttempt
 {
@@ -68,9 +70,9 @@ namespace InTheDogHouse06FEBAttempt
                     
             
         //DECLARING VARIABLES
-            SqlDataAdapter daCustomer;
+            SqlDataAdapter daCustomer, daDog, daBooking; //daDog daBooking for Delete check child record code
             DataSet dsInTheDogHouse = new DataSet();
-            SqlCommandBuilder cmdBCustomer;
+            SqlCommandBuilder cmdBCustomer, cmdBDog, cmdBBooking; //dog booking ones added for Delete function
             DataRow drCustomer;
             String connStr, sqlCustomer;
             int selectedTab = 0;
@@ -85,15 +87,31 @@ namespace InTheDogHouse06FEBAttempt
 
         private void frmCustomer_Load(object sender, EventArgs e)
         {                                           //UPDATE PIPE IF CONNECTION ISSUE OCCURS
-            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#5E9E478C\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
+            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#432B3E12\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
 
+            //SELECT Customer table
             string sqlCustomer = @"SELECT * FROM Customer";
             daCustomer = new SqlDataAdapter(sqlCustomer, SqlConnectionStringBuilder);
             cmdBCustomer = new SqlCommandBuilder(daCustomer);
             daCustomer.FillSchema(dsInTheDogHouse, SchemaType.Source, "Customer");
             daCustomer.Fill(dsInTheDogHouse, "Customer");
 
+            //SELECT Dog (for checking Delete / existing child records)
+            string sqlDog = @"SELECT * FROM Dog";
+            daDog = new SqlDataAdapter(sqlDog, SqlConnectionStringBuilder);
+            cmdBDog = new SqlCommandBuilder(daDog);
+            daDog.FillSchema(dsInTheDogHouse, SchemaType.Source, "Dog");
+            daDog.Fill(dsInTheDogHouse, "Dog");
+
+            //SELECT Booking (for checking Delete / existing child records)
+            string sqlBooking = @"SELECT * FROM Booking";
+            daBooking = new SqlDataAdapter(sqlBooking, SqlConnectionStringBuilder);
+            cmdBBooking = new SqlCommandBuilder(daBooking);
+            daBooking.FillSchema(dsInTheDogHouse, SchemaType.Source, "Booking");
+            daBooking.Fill(dsInTheDogHouse, "Booking");
+          
             dgvCustomer.DataSource = dsInTheDogHouse.Tables["Customer"];
+           
             //Resize the DataGridView columns to fit the newly loaded content.
 
             dgvCustomer.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -557,27 +575,57 @@ namespace InTheDogHouse06FEBAttempt
             }
         }
 
-        private void btnDisplayDelete_Click(object sender, EventArgs e)
+        private void btnDisplayDelete_Click(object sender, EventArgs e) //FUNCTION: DELETING RECORD
         {
             //if (lstCustomer.SelectedIndices.Count == 0)
-            if (dgvCustomer.SelectedRows.Count == 0)
+            if (dgvCustomer.SelectedRows.Count == 0)  //first of all, if nothing is selected... prompt to select
             {
                 MessageBox.Show("Please select a customer from the list.", "Select Customer");
             }
-            else
+            else //...otherwise, proceed...
             {
                 drCustomer = 
-             dsInTheDogHouse.Tables["Customer"].Rows.Find(dgvCustomer.SelectedRows[0].Cells[0].Value);
+             dsInTheDogHouse.Tables["Customer"].Rows.Find(dgvCustomer.SelectedRows[0].Cells[0].Value); //look up data from Customer table for selected row (customer number is column 0)
 
-                string tempName = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString() + "\'s";
+                //two loops, searches each record inside table looking for CustomerNo...
 
-                if (MessageBox.Show("Are you sure you want to delete" + tempName + " details?", "Add Customer", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                        {
-                    drCustomer.Delete();
-                    daCustomer.Update(dsInTheDogHouse, "Customer");
+                bool found = false; //short term variable for this section only 
+
+                //CHECK if customer number is in Booking, therefore it has associated records... 
+                foreach (DataRow dr in dsInTheDogHouse.Tables["Booking"].Rows)  //for each data row in this table..repeat
+                {
+                    if (dr["CustomerNo"] == dgvCustomer.SelectedRows[0].Cells[0].Value) //if CustomerNo matches any record in Booking
+                    {
+                        found = true; //then it has found something 
+                        break; //exit the loop
+                    }
                 }
+                foreach (DataRow dr in dsInTheDogHouse.Tables["Dog"].Rows) //for each data row in this table..repeat
+                {
+                    if (dr["CustomerNo"] == dgvCustomer.SelectedRows[0].Cells[0].Value) //checks for Customer Number in Dog...
+                    {
+                        found = true; //found something...
+                        break; //exit loop
+                    }
+                }
+                if (found = true) //now, if it did find something... Stop and show a message box 
+                {
+                    MessageBox.Show("Cannot delete this record - this customer has Bookings and/or Pets against their name.", "Denied!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+                else //otherwise proceed to delete...
+                {
+                    string tempName = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString() + "\'s";
+
+                    if (MessageBox.Show("Are you sure you want to delete" + tempName + " details?", "Add Customer", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        drCustomer.Delete();
+                        daCustomer.Update(dsInTheDogHouse, "Customer");
+                    }
+                }             
+                }      
             }
-        }
+        
 
         private void btnAddCancel_Click(object sender, EventArgs e)
         {
