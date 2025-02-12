@@ -435,6 +435,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // txtEditTelNo
             // 
+            this.txtEditTelNo.Enabled = false;
             this.txtEditTelNo.Location = new System.Drawing.Point(228, 411);
             this.txtEditTelNo.Name = "txtEditTelNo";
             this.txtEditTelNo.Size = new System.Drawing.Size(350, 31);
@@ -442,6 +443,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // txtEditPostcode
             // 
+            this.txtEditPostcode.Enabled = false;
             this.txtEditPostcode.Location = new System.Drawing.Point(228, 365);
             this.txtEditPostcode.Name = "txtEditPostcode";
             this.txtEditPostcode.Size = new System.Drawing.Size(350, 31);
@@ -449,6 +451,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // txtEditCounty
             // 
+            this.txtEditCounty.Enabled = false;
             this.txtEditCounty.Location = new System.Drawing.Point(228, 319);
             this.txtEditCounty.Name = "txtEditCounty";
             this.txtEditCounty.Size = new System.Drawing.Size(350, 31);
@@ -456,6 +459,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // txtEditTown
             // 
+            this.txtEditTown.Enabled = false;
             this.txtEditTown.Location = new System.Drawing.Point(228, 273);
             this.txtEditTown.Name = "txtEditTown";
             this.txtEditTown.Size = new System.Drawing.Size(350, 31);
@@ -463,6 +467,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // txtEditStreet
             // 
+            this.txtEditStreet.Enabled = false;
             this.txtEditStreet.Location = new System.Drawing.Point(228, 227);
             this.txtEditStreet.Name = "txtEditStreet";
             this.txtEditStreet.Size = new System.Drawing.Size(350, 31);
@@ -470,6 +475,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // txtEditForename
             // 
+            this.txtEditForename.Enabled = false;
             this.txtEditForename.Location = new System.Drawing.Point(228, 178);
             this.txtEditForename.Name = "txtEditForename";
             this.txtEditForename.Size = new System.Drawing.Size(350, 31);
@@ -477,6 +483,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // txtEditSurname
             // 
+            this.txtEditSurname.Enabled = false;
             this.txtEditSurname.Location = new System.Drawing.Point(228, 129);
             this.txtEditSurname.Name = "txtEditSurname";
             this.txtEditSurname.Size = new System.Drawing.Size(350, 31);
@@ -484,6 +491,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // cboEditTitle
             // 
+            this.cboEditTitle.Enabled = false;
             this.cboEditTitle.FormattingEnabled = true;
             this.cboEditTitle.Items.AddRange(new object[] {
             "Mr",

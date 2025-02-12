@@ -85,7 +85,7 @@ namespace InTheDogHouse06FEBAttempt
 
         private void frmCustomer_Load(object sender, EventArgs e)
         {                                           //UPDATE PIPE IF CONNECTION ISSUE OCCURS
-            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#96C2EFAB\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
+            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#5E9E478C\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
 
             string sqlCustomer = @"SELECT * FROM Customer";
             daCustomer = new SqlDataAdapter(sqlCustomer, SqlConnectionStringBuilder);
@@ -407,6 +407,7 @@ namespace InTheDogHouse06FEBAttempt
             {
                 cboEditTitle.Enabled = true;
                 txtEditForename.Enabled = true;
+                txtEditSurname.Enabled = true;
                 txtEditStreet.Enabled = true;
                 txtEditTown.Enabled = true;
                 txtEditCounty.Enabled = true;
