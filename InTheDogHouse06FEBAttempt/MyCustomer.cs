@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InTheDogHouse06FEBAttempt //CHECKING 07FEB..
+namespace InTheDogHouse06FEBAttempt
 {
 class MyCustomer
 {

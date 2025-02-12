@@ -85,7 +85,7 @@ namespace InTheDogHouse06FEBAttempt
 
         private void frmCustomer_Load(object sender, EventArgs e)
         {                                           //UPDATE PIPE IF CONNECTION ISSUE OCCURS
-            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#BC9A78F5\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
+            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#96C2EFAB\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
 
             string sqlCustomer = @"SELECT * FROM Customer";
             daCustomer = new SqlDataAdapter(sqlCustomer, SqlConnectionStringBuilder);
@@ -115,11 +115,6 @@ namespace InTheDogHouse06FEBAttempt
         }
 
         private void lblAddCustNo_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
         {
 
         }
@@ -245,7 +240,7 @@ namespace InTheDogHouse06FEBAttempt
                     drCustomer["CustomerNo"] = myCustomer.CustomerNo;
                     drCustomer["Title"] = myCustomer.Title;
                     drCustomer["Forename"] = myCustomer.Forename;
-                    drCustomer["Surname]"] = myCustomer.Surname;
+                    drCustomer["Surname"] = myCustomer.Surname;
                     drCustomer["Street"] = myCustomer.Street;
                     drCustomer["Town"] = myCustomer.Town;
                     drCustomer["County"] = myCustomer.County;
@@ -458,6 +453,16 @@ namespace InTheDogHouse06FEBAttempt
 
                 try
                 {
+                    myCustomer.Forename = txtEditForename.Text.Trim(); //passed to Customer class to check 
+                }
+                catch (MyException MyEx)
+                {
+                    ok = false;
+                    errP.SetError(txtEditForename, MyEx.toString());
+                }
+
+                try
+                {
                     myCustomer.Street = txtEditStreet.Text.Trim(); //passed to Customer class to check 
                 }
                 catch (MyException MyEx)
@@ -596,6 +601,11 @@ namespace InTheDogHouse06FEBAttempt
         private void btnDisplayExit_Click(object sender, EventArgs e)
         {
             this.Close(); //closes the form
+        }
+
+        private void lblAddCustomerNumber_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnEditCancel_Click(object sender, EventArgs e)
