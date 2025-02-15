@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using InTheDogHouse06FEBAttempt;
+using InTheDogHouse06FEBAttempt; //Everything Windows needs for elements of the form.
 
-namespace InTheDogHouse06FEBAttempt
+namespace InTheDogHouse06FEBAttempt //Namespace for this project
 {
     partial class frmCustomer
     {
-        private void InitializeComponent()
+        private void InitializeComponent() //INITIALISES EVERY ELEMENT ON THE CUSTOMER FORM
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCustomer));

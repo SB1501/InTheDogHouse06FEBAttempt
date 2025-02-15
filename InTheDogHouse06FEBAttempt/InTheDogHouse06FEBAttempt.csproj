@@ -52,7 +52,14 @@
     <Compile Include="frmCustomer.Designer.cs">
       <DependentUpon>frmCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDog.Designer.cs">
+      <DependentUpon>frmDog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyCustomer.cs" />
+    <Compile Include="MyDog.cs" />
     <Compile Include="MyException.cs" />
     <Compile Include="MyValidation.cs" />
     <Compile Include="Program.cs" />
@@ -61,20 +68,17 @@
       <DependentUpon>frmCustomer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDog.resx">
+      <DependentUpon>frmDog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

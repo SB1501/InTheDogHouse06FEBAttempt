@@ -67,23 +67,23 @@ namespace InTheDogHouse06FEBAttempt
         private System.Windows.Forms.Label lblEditForename;
         private System.Windows.Forms.Label lblEditSurname;
         private System.Windows.Forms.Label lblEditTitle;
-                    
-            
+
+
         //DECLARING VARIABLES
-            SqlDataAdapter daCustomer, daDog, daBooking; //daDog daBooking for Delete check child record code
-            DataSet dsInTheDogHouse = new DataSet();
-            SqlCommandBuilder cmdBCustomer, cmdBDog, cmdBBooking; //dog booking ones added for Delete function
-            DataRow drCustomer;
-            String connStr, sqlCustomer;
-            int selectedTab = 0;
-            bool custSelected = false;
-            int custNoSelected = 0;
+        SqlDataAdapter daCustomer, daDog, daBooking; //daDog daBooking for Delete check child record code
+        DataSet dsInTheDogHouse = new DataSet();
+        SqlCommandBuilder cmdBCustomer, cmdBDog, cmdBBooking; //dog booking ones added for Delete function
+        DataRow drCustomer;
+        String connStr, sqlCustomer;
+        int selectedTab = 0;
+        bool custSelected = false;
+        int custNoSelected = 0;
 
         public frmCustomer()
         {
             InitializeComponent();
         }
-        
+
 
         private void frmCustomer_Load(object sender, EventArgs e)
         {                                           //UPDATE PIPE IF CONNECTION ISSUE OCCURS
@@ -109,9 +109,9 @@ namespace InTheDogHouse06FEBAttempt
             cmdBBooking = new SqlCommandBuilder(daBooking);
             daBooking.FillSchema(dsInTheDogHouse, SchemaType.Source, "Booking");
             daBooking.Fill(dsInTheDogHouse, "Booking");
-          
+
             dgvCustomer.DataSource = dsInTheDogHouse.Tables["Customer"];
-           
+
             //Resize the DataGridView columns to fit the newly loaded content.
 
             dgvCustomer.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -375,9 +375,9 @@ namespace InTheDogHouse06FEBAttempt
                     }
             }
         }
-    
 
-    void AddTabValidate(object sender, CancelEventArgs e)
+
+        void AddTabValidate(object sender, CancelEventArgs e)
         {
             if (dgvCustomer.SelectedRows.Count == 0)
             {
@@ -584,7 +584,7 @@ namespace InTheDogHouse06FEBAttempt
             }
             else //...otherwise, proceed...
             {
-                drCustomer = 
+                drCustomer =
              dsInTheDogHouse.Tables["Customer"].Rows.Find(dgvCustomer.SelectedRows[0].Cells[0].Value); //look up data from Customer table for selected row (customer number is column 0)
 
                 //two loops, searches each record inside table looking for CustomerNo...
@@ -622,10 +622,10 @@ namespace InTheDogHouse06FEBAttempt
                         drCustomer.Delete();
                         daCustomer.Update(dsInTheDogHouse, "Customer");
                     }
-                }             
-                }      
+                }
             }
-        
+        }
+
 
         private void btnAddCancel_Click(object sender, EventArgs e)
         {
@@ -664,4 +664,3 @@ namespace InTheDogHouse06FEBAttempt
         }
     }
 }
-

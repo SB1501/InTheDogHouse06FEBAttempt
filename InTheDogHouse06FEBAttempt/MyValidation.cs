@@ -1,43 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows.Forms; //Everything Windows needs to coordinate the class below...
 
 
-namespace InTheDogHouse06FEBAttempt //CHECK COMPLETE 07FEB
+namespace InTheDogHouse06FEBAttempt //Namespace ensures it's part of the same project as other classes
 
 {
-    class MyValidation
+    class MyValidation //Class Defined - Methods inside it are for each validation check
+                                //Each validation method is called where needed and given specifics
+                                   //which are sent here and used in some kind of calculation
     {
-        public static bool validLength(string txt, int min, int max)
+        public static bool validLength(string txt, int min, int max) //CHECKS LENGTHS ARE AS SPECIFIED
         {
-            bool ok = true;
+            bool ok = true; //Sets an 'OK' flag
 
-            if (string.IsNullOrEmpty(txt))
-                ok = false;
+            if (string.IsNullOrEmpty(txt)) //if value is empty... 
+                ok = false;                 //ok flag is NOT OK
 
-            else if (txt.Length < min || txt.Length > max)
-                ok = false;
-
-            return ok;
+            else if (txt.Length < min || txt.Length > max) //otherwise, check if it's less than min, or more than max...
+                ok = false;                                 // if it is, then it's NOT OK 
+              
+            return ok;  //returns OK which is a true or false value to where it was called.
         }
 
         public static bool validNumber(string txt)
         {
             bool ok = true;
 
-            for (int x = 0; x < txt.Length; x++)
+            for (int x = 0; x < txt.Length; x++) //for each number passed...
             {
-                if (!(char.IsNumber(txt[x])))
+                if (!(char.IsNumber(txt[x]))) //check character by character, is it a number?
                 {
                     ok = false;
                 }
             }
-            return ok;
+            return ok; //only returns true if all passed are numbers..
 
         }
 
@@ -45,33 +48,49 @@ namespace InTheDogHouse06FEBAttempt //CHECK COMPLETE 07FEB
         {
             bool ok = true;
 
-            if (txt.Trim().Length == 0)
+            if (txt.Trim().Length == 0) //checks not null
             {
                 ok = false;
             }
             else
             {
-                for (int x = 0; x < txt.Length; x++)
+                for (int x = 0; x < txt.Length; x++) //for each letter passed...
                 {
-                    if (!(char.IsLetter(txt[x])))
+                    if (!(char.IsLetter(txt[x]))) //check character by character if its' a letter
                         ok = false;
                 }
             }
-            return ok;
+            return ok; //only returns true if each character is a letter
+        }
+
+           public static bool validDate(string dateString) //CUSTOM DATE VALID METHOD
+        {
+            bool ok = true;
+
+            if (dateString.Trim().Length == 0) //checks if value is null
+            {
+                ok = false;
+            }
+            else
+            {
+                DateTime parsedDate; //new parsed date variable. Below checks it's the right format. 
+                ok = DateTime.TryParseExact(dateString, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate);
+            }
+            return ok; //only true if it passes the test 
         }
 
         public static bool validLetterWhitespace(string txt) //allows alphabetic characters and whitespace 
         {
             bool ok = true;
 
-            if (txt.Trim().Length == 0)
+            if (txt.Trim().Length == 0) //checks if null value passed
             {
                 ok = false;
             }
             else
             {
-                for (int x = 0; x < txt.Length; x++)
-                {
+                for (int x = 0; x < txt.Length; x++) //checks character by character
+                {       //if it's NOT ! a letter...           ...or NOT ! whitespace...     ...or NOT ! number...
                     if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(char.IsNumber(txt[x])))
                         ok = false;
                 }
@@ -202,7 +221,7 @@ public static bool validDogColour(string txt) //allows alphanumeric and whitespa
         return ok; 
     }
 
-    public static String firstLetterEachWordToUpper(string word) //npt working 
+    public static String firstLetterEachWordToUpper(string word) //not working 
     {
         char[] array = word.ToCharArray();
 
