@@ -20,7 +20,7 @@ namespace InTheDogHouse06FEBAttempt
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDog));
             this.errP = new System.Windows.Forms.ErrorProvider(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabDog = new System.Windows.Forms.TabControl();
             this.tabDisplay = new System.Windows.Forms.TabPage();
             this.btnDisplayExit = new System.Windows.Forms.Button();
             this.btnDisplayDelete = new System.Windows.Forms.Button();
@@ -28,14 +28,14 @@ namespace InTheDogHouse06FEBAttempt
             this.btnDisplayAdd = new System.Windows.Forms.Button();
             this.dgvDog = new System.Windows.Forms.DataGridView();
             this.tabAdd = new System.Windows.Forms.TabPage();
-            this.cboBreedNo = new System.Windows.Forms.ComboBox();
+            this.cmbAddBreedNo = new System.Windows.Forms.ComboBox();
+            this.cmbAddGender = new System.Windows.Forms.ComboBox();
+            this.dtpAddDOB = new System.Windows.Forms.DateTimePicker();
             this.txtAddName = new System.Windows.Forms.TextBox();
             this.btnAddCancel = new System.Windows.Forms.Button();
             this.btnAddAdd = new System.Windows.Forms.Button();
             this.txtAddColour = new System.Windows.Forms.TextBox();
-            this.txtAddGender = new System.Windows.Forms.TextBox();
-            this.txtAddDOB = new System.Windows.Forms.TextBox();
-            this.cboCustNo = new System.Windows.Forms.ComboBox();
+            this.cmbAddCustNo = new System.Windows.Forms.ComboBox();
             this.lblAddDogNumber = new System.Windows.Forms.Label();
             this.lblAddCustNo = new System.Windows.Forms.Label();
             this.lblAddColour = new System.Windows.Forms.Label();
@@ -45,12 +45,12 @@ namespace InTheDogHouse06FEBAttempt
             this.lblAddName = new System.Windows.Forms.Label();
             this.lblAddDogNo = new System.Windows.Forms.Label();
             this.tabEdit = new System.Windows.Forms.TabPage();
-            this.cboEditBreedNo = new System.Windows.Forms.ComboBox();
+            this.cmbEditBreedNo = new System.Windows.Forms.ComboBox();
+            this.cmbEditGender = new System.Windows.Forms.ComboBox();
+            this.dtpEditDOB = new System.Windows.Forms.DateTimePicker();
             this.txtEditName = new System.Windows.Forms.TextBox();
             this.txtEditColour = new System.Windows.Forms.TextBox();
-            this.txtEditGender = new System.Windows.Forms.TextBox();
-            this.txtEditDOB = new System.Windows.Forms.TextBox();
-            this.cboEditCustNo = new System.Windows.Forms.ComboBox();
+            this.cmbEditCustNo = new System.Windows.Forms.ComboBox();
             this.lblEditDogNumber = new System.Windows.Forms.Label();
             this.lblEditCustNo = new System.Windows.Forms.Label();
             this.lblEditColour = new System.Windows.Forms.Label();
@@ -64,7 +64,7 @@ namespace InTheDogHouse06FEBAttempt
             this.lblDogForm = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabControl.SuspendLayout();
+            this.tabDog.SuspendLayout();
             this.tabDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDog)).BeginInit();
             this.tabAdd.SuspendLayout();
@@ -83,19 +83,18 @@ namespace InTheDogHouse06FEBAttempt
             this.pictureBox1.Size = new System.Drawing.Size(1237, 177);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // tabControl
+            // tabDog
             // 
-            this.tabControl.Controls.Add(this.tabDisplay);
-            this.tabControl.Controls.Add(this.tabAdd);
-            this.tabControl.Controls.Add(this.tabEdit);
-            this.tabControl.Location = new System.Drawing.Point(38, 210);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1228, 517);
-            this.tabControl.TabIndex = 1;
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+            this.tabDog.Controls.Add(this.tabDisplay);
+            this.tabDog.Controls.Add(this.tabAdd);
+            this.tabDog.Controls.Add(this.tabEdit);
+            this.tabDog.Location = new System.Drawing.Point(38, 210);
+            this.tabDog.Name = "tabDog";
+            this.tabDog.SelectedIndex = 0;
+            this.tabDog.Size = new System.Drawing.Size(1228, 517);
+            this.tabDog.TabIndex = 1;
+            this.tabDog.SelectedIndexChanged += new System.EventHandler(this.tabDog_SelectedIndexChanged);
             // 
             // tabDisplay
             // 
@@ -166,14 +165,14 @@ namespace InTheDogHouse06FEBAttempt
             // 
             // tabAdd
             // 
-            this.tabAdd.Controls.Add(this.cboBreedNo);
+            this.tabAdd.Controls.Add(this.cmbAddBreedNo);
+            this.tabAdd.Controls.Add(this.cmbAddGender);
+            this.tabAdd.Controls.Add(this.dtpAddDOB);
             this.tabAdd.Controls.Add(this.txtAddName);
             this.tabAdd.Controls.Add(this.btnAddCancel);
             this.tabAdd.Controls.Add(this.btnAddAdd);
             this.tabAdd.Controls.Add(this.txtAddColour);
-            this.tabAdd.Controls.Add(this.txtAddGender);
-            this.tabAdd.Controls.Add(this.txtAddDOB);
-            this.tabAdd.Controls.Add(this.cboCustNo);
+            this.tabAdd.Controls.Add(this.cmbAddCustNo);
             this.tabAdd.Controls.Add(this.lblAddDogNumber);
             this.tabAdd.Controls.Add(this.lblAddCustNo);
             this.tabAdd.Controls.Add(this.lblAddColour);
@@ -190,13 +189,31 @@ namespace InTheDogHouse06FEBAttempt
             this.tabAdd.Text = "Add";
             this.tabAdd.UseVisualStyleBackColor = true;
             // 
-            // cboBreedNo
+            // cmbAddBreedNo
             // 
-            this.cboBreedNo.FormattingEnabled = true;
-            this.cboBreedNo.Location = new System.Drawing.Point(226, 130);
-            this.cboBreedNo.Name = "cboBreedNo";
-            this.cboBreedNo.Size = new System.Drawing.Size(350, 33);
-            this.cboBreedNo.TabIndex = 21;
+            this.cmbAddBreedNo.FormattingEnabled = true;
+            this.cmbAddBreedNo.Location = new System.Drawing.Point(226, 124);
+            this.cmbAddBreedNo.Name = "cmbAddBreedNo";
+            this.cmbAddBreedNo.Size = new System.Drawing.Size(350, 33);
+            this.cmbAddBreedNo.TabIndex = 58;
+            // 
+            // cmbAddGender
+            // 
+            this.cmbAddGender.FormattingEnabled = true;
+            this.cmbAddGender.Items.AddRange(new object[] {
+            "M",
+            "F"});
+            this.cmbAddGender.Location = new System.Drawing.Point(226, 224);
+            this.cmbAddGender.Name = "cmbAddGender";
+            this.cmbAddGender.Size = new System.Drawing.Size(350, 33);
+            this.cmbAddGender.TabIndex = 23;
+            // 
+            // dtpAddDOB
+            // 
+            this.dtpAddDOB.Location = new System.Drawing.Point(226, 173);
+            this.dtpAddDOB.Name = "dtpAddDOB";
+            this.dtpAddDOB.Size = new System.Drawing.Size(350, 31);
+            this.dtpAddDOB.TabIndex = 22;
             // 
             // txtAddName
             // 
@@ -232,28 +249,13 @@ namespace InTheDogHouse06FEBAttempt
             this.txtAddColour.Size = new System.Drawing.Size(350, 31);
             this.txtAddColour.TabIndex = 14;
             // 
-            // txtAddGender
+            // cmbAddCustNo
             // 
-            this.txtAddGender.Location = new System.Drawing.Point(226, 224);
-            this.txtAddGender.Name = "txtAddGender";
-            this.txtAddGender.Size = new System.Drawing.Size(350, 31);
-            this.txtAddGender.TabIndex = 13;
-            // 
-            // txtAddDOB
-            // 
-            this.txtAddDOB.Location = new System.Drawing.Point(226, 175);
-            this.txtAddDOB.Name = "txtAddDOB";
-            this.txtAddDOB.Size = new System.Drawing.Size(350, 31);
-            this.txtAddDOB.TabIndex = 12;
-            // 
-            // cboCustNo
-            // 
-            this.cboCustNo.FormattingEnabled = true;
-            this.cboCustNo.Location = new System.Drawing.Point(226, 315);
-            this.cboCustNo.Name = "cboCustNo";
-            this.cboCustNo.Size = new System.Drawing.Size(350, 33);
-            this.cboCustNo.TabIndex = 10;
-            this.cboCustNo.SelectedIndexChanged += new System.EventHandler(this.cboAddTitle_SelectedIndexChanged);
+            this.cmbAddCustNo.FormattingEnabled = true;
+            this.cmbAddCustNo.Location = new System.Drawing.Point(226, 315);
+            this.cmbAddCustNo.Name = "cmbAddCustNo";
+            this.cmbAddCustNo.Size = new System.Drawing.Size(350, 33);
+            this.cmbAddCustNo.TabIndex = 10;
             // 
             // lblAddDogNumber
             // 
@@ -263,7 +265,6 @@ namespace InTheDogHouse06FEBAttempt
             this.lblAddDogNumber.Size = new System.Drawing.Size(84, 25);
             this.lblAddDogNumber.TabIndex = 9;
             this.lblAddDogNumber.Text = "000000";
-            this.lblAddDogNumber.Click += new System.EventHandler(this.lblAddDogNumber_Click);
             // 
             // lblAddCustNo
             // 
@@ -306,9 +307,9 @@ namespace InTheDogHouse06FEBAttempt
             this.lblAddBreed.AutoSize = true;
             this.lblAddBreed.Location = new System.Drawing.Point(23, 132);
             this.lblAddBreed.Name = "lblAddBreed";
-            this.lblAddBreed.Size = new System.Drawing.Size(102, 25);
+            this.lblAddBreed.Size = new System.Drawing.Size(131, 25);
             this.lblAddBreed.TabIndex = 2;
-            this.lblAddBreed.Text = "Breed No";
+            this.lblAddBreed.Text = "Breed Name";
             // 
             // lblAddName
             // 
@@ -327,16 +328,15 @@ namespace InTheDogHouse06FEBAttempt
             this.lblAddDogNo.Size = new System.Drawing.Size(84, 25);
             this.lblAddDogNo.TabIndex = 0;
             this.lblAddDogNo.Text = "Dog No";
-            this.lblAddDogNo.Click += new System.EventHandler(this.lblAddCustNo_Click);
             // 
             // tabEdit
             // 
-            this.tabEdit.Controls.Add(this.cboEditBreedNo);
+            this.tabEdit.Controls.Add(this.cmbEditBreedNo);
+            this.tabEdit.Controls.Add(this.cmbEditGender);
+            this.tabEdit.Controls.Add(this.dtpEditDOB);
             this.tabEdit.Controls.Add(this.txtEditName);
             this.tabEdit.Controls.Add(this.txtEditColour);
-            this.tabEdit.Controls.Add(this.txtEditGender);
-            this.tabEdit.Controls.Add(this.txtEditDOB);
-            this.tabEdit.Controls.Add(this.cboEditCustNo);
+            this.tabEdit.Controls.Add(this.cmbEditCustNo);
             this.tabEdit.Controls.Add(this.lblEditDogNumber);
             this.tabEdit.Controls.Add(this.lblEditCustNo);
             this.tabEdit.Controls.Add(this.lblEditColour);
@@ -353,30 +353,35 @@ namespace InTheDogHouse06FEBAttempt
             this.tabEdit.TabIndex = 2;
             this.tabEdit.Text = "Edit";
             this.tabEdit.UseVisualStyleBackColor = true;
-            this.tabEdit.Click += new System.EventHandler(this.tabEdit_Click);
             // 
-            // cboEditBreedNo
+            // cmbEditBreedNo
             // 
-            this.cboEditBreedNo.Enabled = false;
-            this.cboEditBreedNo.FormattingEnabled = true;
-            this.cboEditBreedNo.Items.AddRange(new object[] {
-            "Labrador",
-            "Alaskan Malamute",
-            "St Bernard",
-            "Poodle",
-            "Border Collie",
-            "Shih Tzu",
-            "Alsatian",
-            "Bulldog",
-            "German Shepherd",
-            "Jack Russell",
-            "Boxer",
-            "Pug"});
-            this.cboEditBreedNo.Location = new System.Drawing.Point(238, 130);
-            this.cboEditBreedNo.Name = "cboEditBreedNo";
-            this.cboEditBreedNo.Size = new System.Drawing.Size(350, 33);
-            this.cboEditBreedNo.TabIndex = 55;
-            this.cboEditBreedNo.SelectedIndexChanged += new System.EventHandler(this.cboEditBreedNo_SelectedIndexChanged);
+            this.cmbEditBreedNo.Enabled = false;
+            this.cmbEditBreedNo.FormattingEnabled = true;
+            this.cmbEditBreedNo.Location = new System.Drawing.Point(238, 124);
+            this.cmbEditBreedNo.Name = "cmbEditBreedNo";
+            this.cmbEditBreedNo.Size = new System.Drawing.Size(350, 33);
+            this.cmbEditBreedNo.TabIndex = 57;
+            // 
+            // cmbEditGender
+            // 
+            this.cmbEditGender.Enabled = false;
+            this.cmbEditGender.FormattingEnabled = true;
+            this.cmbEditGender.Items.AddRange(new object[] {
+            "M",
+            "F"});
+            this.cmbEditGender.Location = new System.Drawing.Point(238, 221);
+            this.cmbEditGender.Name = "cmbEditGender";
+            this.cmbEditGender.Size = new System.Drawing.Size(350, 33);
+            this.cmbEditGender.TabIndex = 56;
+            // 
+            // dtpEditDOB
+            // 
+            this.dtpEditDOB.Enabled = false;
+            this.dtpEditDOB.Location = new System.Drawing.Point(238, 174);
+            this.dtpEditDOB.Name = "dtpEditDOB";
+            this.dtpEditDOB.Size = new System.Drawing.Size(350, 31);
+            this.dtpEditDOB.TabIndex = 55;
             // 
             // txtEditName
             // 
@@ -394,35 +399,14 @@ namespace InTheDogHouse06FEBAttempt
             this.txtEditColour.Size = new System.Drawing.Size(350, 31);
             this.txtEditColour.TabIndex = 52;
             // 
-            // txtEditGender
+            // cmbEditCustNo
             // 
-            this.txtEditGender.Enabled = false;
-            this.txtEditGender.Location = new System.Drawing.Point(238, 224);
-            this.txtEditGender.Name = "txtEditGender";
-            this.txtEditGender.Size = new System.Drawing.Size(350, 31);
-            this.txtEditGender.TabIndex = 51;
-            // 
-            // txtEditDOB
-            // 
-            this.txtEditDOB.Enabled = false;
-            this.txtEditDOB.Location = new System.Drawing.Point(238, 175);
-            this.txtEditDOB.Name = "txtEditDOB";
-            this.txtEditDOB.Size = new System.Drawing.Size(350, 31);
-            this.txtEditDOB.TabIndex = 50;
-            // 
-            // cboEditCustNo
-            // 
-            this.cboEditCustNo.Enabled = false;
-            this.cboEditCustNo.FormattingEnabled = true;
-            this.cboEditCustNo.Items.AddRange(new object[] {
-            "Mr",
-            "Mrs",
-            "Miss",
-            "Ms"});
-            this.cboEditCustNo.Location = new System.Drawing.Point(238, 318);
-            this.cboEditCustNo.Name = "cboEditCustNo";
-            this.cboEditCustNo.Size = new System.Drawing.Size(350, 33);
-            this.cboEditCustNo.TabIndex = 49;
+            this.cmbEditCustNo.Enabled = false;
+            this.cmbEditCustNo.FormattingEnabled = true;
+            this.cmbEditCustNo.Location = new System.Drawing.Point(238, 318);
+            this.cmbEditCustNo.Name = "cmbEditCustNo";
+            this.cmbEditCustNo.Size = new System.Drawing.Size(350, 33);
+            this.cmbEditCustNo.TabIndex = 49;
             // 
             // lblEditDogNumber
             // 
@@ -474,9 +458,9 @@ namespace InTheDogHouse06FEBAttempt
             this.lblEditBreedNo.AutoSize = true;
             this.lblEditBreedNo.Location = new System.Drawing.Point(35, 132);
             this.lblEditBreedNo.Name = "lblEditBreedNo";
-            this.lblEditBreedNo.Size = new System.Drawing.Size(102, 25);
+            this.lblEditBreedNo.Size = new System.Drawing.Size(131, 25);
             this.lblEditBreedNo.TabIndex = 42;
-            this.lblEditBreedNo.Text = "Breed No";
+            this.lblEditBreedNo.Text = "Breed Name";
             // 
             // lblEditName
             // 
@@ -529,7 +513,7 @@ namespace InTheDogHouse06FEBAttempt
             // 
             this.ClientSize = new System.Drawing.Size(1291, 782);
             this.Controls.Add(this.lblDogForm);
-            this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.tabDog);
             this.Controls.Add(this.pictureBox1);
             this.Name = "frmDog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -537,7 +521,7 @@ namespace InTheDogHouse06FEBAttempt
             this.Shown += new System.EventHandler(this.frmDog_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.errP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabControl.ResumeLayout(false);
+            this.tabDog.ResumeLayout(false);
             this.tabDisplay.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDog)).EndInit();
             this.tabAdd.ResumeLayout(false);
@@ -550,14 +534,10 @@ namespace InTheDogHouse06FEBAttempt
         }
 
         private IContainer components;
-        private ComboBox cboBreedNo;
         private TextBox txtAddName;
-        private ComboBox cboEditBreedNo;
         private TextBox txtEditName;
         private TextBox txtEditColour;
-        private TextBox txtEditGender;
-        private TextBox txtEditDOB;
-        private ComboBox cboEditCustNo;
+        private ComboBox cmbEditCustNo;
         private Label lblEditDogNumber;
         private Label lblEditCustNo;
         private Label lblEditColour;
@@ -567,5 +547,11 @@ namespace InTheDogHouse06FEBAttempt
         private Label lblEditName;
         private Label lblEditDogNo;
         private Label lblDogForm;
+        private DateTimePicker dtpAddDOB;
+        private DateTimePicker dtpEditDOB;
+        private ComboBox cmbAddGender;
+        private ComboBox cmbEditGender;
+        private ComboBox cmbAddBreedNo;
+        private ComboBox cmbEditBreedNo;
     }
 }

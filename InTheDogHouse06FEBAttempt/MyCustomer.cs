@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InTheDogHouse06FEBAttempt
+namespace InTheDogHouse06FEBAttempt //Same namespace as the other classes / files
 {
-    class MyCustomer
+    class MyCustomer 
     {
         private int customerNo; //Defines all of the fields 
         private string title, surname, forename, street, town, county, postcode, telNo;
@@ -25,14 +25,14 @@ namespace InTheDogHouse06FEBAttempt
 
         public int CustomerNo
         {  //GETTERS SETTERS
-            get { return customerNo; }
-            set { customerNo = value; }
+            get {return customerNo;}
+            set {customerNo = value;}
         }
 
         //METHOD FOR TAKING INFORMATION IN TO EACH ATTRIBUTE
         public string Title //TITLE
         {
-            get { return title; }
+            get {return title;}
             set
             {           //In order to write to the variable it must pass these tests... or error message
                 if (value.ToUpper() != "MR" && value.ToUpper() != "MRS" && value.ToUpper() != "MISS" && value.ToUpper() != "MS")

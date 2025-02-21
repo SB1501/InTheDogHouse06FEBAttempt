@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace InTheDogHouse06FEBAttempt
 {
-    class MyDog //FIX VALIDATION RULES FOR NEW DOG FIELDS FORM
+    class MyDog 
     {
-        private int dogNo;
-        private string name, breedNo, DOB, gender, colour, customerNo;
+        private int dogNo, breedNo, customerNo;
+        private string name, DOB, gender, colour;
 
         public MyDog()
         { //BLANK CONSTRUCTOR, takes nothing in
-            this.dogNo = 0;
-            this.name = ""; this.breedNo = ""; this.DOB = ""; this.gender = ""; this.colour = ""; this.customerNo = "";
+            this.dogNo = 0; this.breedNo = 0; this.customerNo = 0;
+            this.name = ""; this.DOB = ""; this.gender = ""; this.colour = "";
         }
 
-        public MyDog(int dogNo, string name, string breedNo, string DOB, string gender, string colour, string customerNo)
+        public MyDog(int dogNo, string name, int breedNo, string DOB, string gender, string colour, int customerNo)
         { //SPECIFIED CONSTRUCTOR, takes input values with data type 
-            this.dogNo = dogNo;
-            this.name = name; this.breedNo = breedNo; this.DOB = DOB; this.gender = gender; this.colour = colour; this.customerNo = customerNo;
+            this.dogNo = dogNo; this.breedNo = breedNo; this.customerNo = customerNo;
+            this.name = name; this.DOB = DOB; this.gender = gender; this.colour = colour;
         }
 
         public int DogNo
@@ -44,16 +44,10 @@ namespace InTheDogHouse06FEBAttempt
             }
         }
 
-        public string BreedNo
-        {
-            get { return breedNo; } //ISSUES - As form still shows numbers, not names.
-            set
-            {
-                if (value.ToUpper() != "Labrador" && value.ToUpper() != "Alaskan Malamute" && value.ToUpper() != "St Bernard" && value.ToUpper() != "Poodle" && value.ToUpper() != "Border Collie" && value.ToUpper() != "Shih Tzu" && value.ToUpper() != "Alsatian" && value.ToUpper() != "Bulldog" && value.ToUpper() != "German Shepherd" && value.ToUpper() != "Jack Russell" && value.ToUpper() != "Boxer" && value.ToUpper() != "Pug")
-                    throw new MyException("You must select a valid breed type.");
-                else
-                    breedNo = MyValidation.firstLetterEachWordToUpper(value);
-            }
+        public int BreedNo
+        { 
+            get { return breedNo; }
+            set { breedNo = value; }
         }
 
         public string Dob //MIGHT HAVE ISSUES WITH NESTED DATE CHECKS (valid format, then 56 days)
@@ -61,8 +55,7 @@ namespace InTheDogHouse06FEBAttempt
             get { return DOB; }
             set
             {
-                if (MyValidation.validDate(value))
-                {
+                
                     if (MyValidation.validDogDOB(value))
                     {
                         DOB = MyValidation.firstLetterEachWordToUpper(value);
@@ -70,12 +63,11 @@ namespace InTheDogHouse06FEBAttempt
                     else
                         throw new MyException("Dog must be at least 56 days old to be booked in.");
                 }
-                else
-                    throw new MyException("Date must by dd/mm/yyyy format!");
+               
 
             }
 
-        }
+        
 
         public string Gender
         {
@@ -103,21 +95,10 @@ namespace InTheDogHouse06FEBAttempt
             }
         }
 
-        public string CustomerNo
+        public int CustomerNo
         {
-            get { return customerNo; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    customerNo = value;
-                }
-                else
-                {
-                    throw new MyException("CustomerNo cannot be null or empty.");
-                }
-            }
-
+            get { return customerNo; } //CHANGED 20FEB to customerNo from breedNo
+            set { customerNo = value; }
         }
 
     }

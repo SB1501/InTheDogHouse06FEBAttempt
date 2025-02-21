@@ -16,10 +16,10 @@ namespace InTheDogHouse06FEBAttempt
 {
     public partial class frmDog : Form
     {
-
+        //DECLARATION OF CONTROL ELEMENTS FOR THE FORM
         private System.Windows.Forms.ErrorProvider errP;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabControl tabDog;
         private System.Windows.Forms.TabPage tabDisplay;
         private System.Windows.Forms.TabPage tabAdd;
         private System.Windows.Forms.TabPage tabEdit;
@@ -36,9 +36,7 @@ namespace InTheDogHouse06FEBAttempt
         private System.Windows.Forms.Label lblAddColour;
         private System.Windows.Forms.Label lblAddCustNo;
         private System.Windows.Forms.Label lblAddDogNumber;
-        private System.Windows.Forms.ComboBox cboCustNo;
-        private System.Windows.Forms.TextBox txtAddDOB;
-        private System.Windows.Forms.TextBox txtAddGender;
+        private System.Windows.Forms.ComboBox cmbAddCustNo;
         private System.Windows.Forms.TextBox txtAddColour;
         private System.Windows.Forms.Button btnAddCancel;
         private System.Windows.Forms.Button btnAddAdd;
@@ -46,14 +44,14 @@ namespace InTheDogHouse06FEBAttempt
         private System.Windows.Forms.Button btnEditEdit;
 
 
-        //DECLARING VARIABLES
-        SqlDataAdapter daDog, daCustomer, daBooking, daBreed; //daDog daBooking for Delete check child record code
+        //DECLARING VARIABLES FOR LOCAL SQL CONNECTION
+        SqlDataAdapter daDog, daCustomer, daBreed;
         DataSet dsInTheDogHouse = new DataSet();
-        SqlCommandBuilder cmdBDog, cmdBCustomer, cmdBBooking; //dog booking ones added for Delete function
+        SqlCommandBuilder cmdBDog, cmdBCustomer, cmdBBreed; 
         DataRow drDog;
         String connStr, sqlDog;
         int selectedTab = 0;
-        bool dogSelected = false;
+        bool dogSelected = false; 
         int dogNoSelected = 0;
 
         public frmDog()
@@ -64,7 +62,7 @@ namespace InTheDogHouse06FEBAttempt
 
         private void frmDog_Load(object sender, EventArgs e)
         {                                           //UPDATE PIPE IF CONNECTION ISSUE OCCURS
-            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#275E39B0\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
+            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#9DB41288\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
 
             //SELECT Dog table
             string sqlDog = @"SELECT * FROM Dog";
@@ -73,47 +71,52 @@ namespace InTheDogHouse06FEBAttempt
             daDog.FillSchema(dsInTheDogHouse, SchemaType.Source, "Dog");
             daDog.Fill(dsInTheDogHouse, "Dog");
 
-            //SELECT Customer (for checking Delete / existing child records) //MAY NEED CHANGED!
+            //SELECT Breed table
+            string sqlBreed = @"SELECT * FROM Breed";
+            daBreed = new SqlDataAdapter(sqlBreed, SqlConnectionStringBuilder);
+            cmdBBreed = new SqlCommandBuilder(daBreed);
+            daBreed.FillSchema(dsInTheDogHouse, SchemaType.Source, "Breed");
+            daBreed.Fill(dsInTheDogHouse, "Breed");
+
+            //SELECT Customer table
             string sqlCustomer = @"SELECT * FROM Customer";
             daCustomer = new SqlDataAdapter(sqlCustomer, SqlConnectionStringBuilder);
             cmdBCustomer = new SqlCommandBuilder(daCustomer);
             daCustomer.FillSchema(dsInTheDogHouse, SchemaType.Source, "Customer"); //MAY NEED CHANGED!
             daCustomer.Fill(dsInTheDogHouse, "Customer");
 
-            //SELECT Booking (for checking Delete / existing child records)
-            string sqlBooking = @"SELECT * FROM Booking";
-            daBooking = new SqlDataAdapter(sqlBooking, SqlConnectionStringBuilder);
-            cmdBBooking = new SqlCommandBuilder(daBooking);
-            daBooking.FillSchema(dsInTheDogHouse, SchemaType.Source, "Booking");
-            daBooking.Fill(dsInTheDogHouse, "Booking");
+          
 
-            //SELECT Breed (for Breed name dropdown)
-            string sqlBreed = @"SELECT * FROM Breed";
-            daBreed = new SqlDataAdapter(sqlBreed, SqlConnectionStringBuilder);
-            cmdBBooking = new SqlCommandBuilder(daBreed);
-            daBreed.FillSchema(dsInTheDogHouse, SchemaType.Source, "Breed");
-            daBreed.Fill(dsInTheDogHouse, "Breed");
+            
 
             dgvDog.DataSource = dsInTheDogHouse.Tables["Dog"];
 
             //Resize the DataGridView columns to fit the newly loaded content.
+            dgvDog.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+            tabDog.SelectedIndex = 1;
+            tabDog.SelectedIndex = 0;
 
             dgvDog.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
-            tabControl.SelectedIndex = 1;
-            tabControl.SelectedIndex = 0;
+            //NEW CODE FOR BREED DROP DOWN
+            cmbAddBreedNo.DataSource = dsInTheDogHouse.Tables["Breed"];
+            cmbAddBreedNo.ValueMember = "BreedNo";
+            cmbAddBreedNo.DisplayMember = "BreedName";
 
-            dgvDog.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            foreach (DataRow dr in dsInTheDogHouse.Tables["Customer"].Rows)
+            {
+                cmbAddCustNo.Items.Add(dr["CustomerNo"] + "(" + dr["Surname"] + "," + dr["Forename"] + ")");
+            }
 
-        }
+            cmbEditBreedNo.DataSource = dsInTheDogHouse.Tables["Breed"];
+            cmbEditBreedNo.ValueMember = "BreedNo";
+            cmbEditBreedNo.DisplayMember = "BreedName";
 
-        private void lblAddCustNo_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cboAddTitle_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            foreach (DataRow dr in dsInTheDogHouse.Tables["Customer"].Rows)
+            {
+                cmbEditCustNo.Items.Add(dr["CustomerNo"] + "(" + dr["Surname"] + "," + dr["Forename"] + ")");
+            }
 
         }
 
@@ -147,29 +150,40 @@ namespace InTheDogHouse06FEBAttempt
                 errP.SetError(txtAddName, MyEx.toString());
             }
 
+            //ADD BREED DROP DOWN 
             try
             {
-                myDog.Dob = txtAddDOB.Text.Trim(); // passed to Dog class to check
+                myDog.BreedNo = Convert.ToInt32(cmbAddBreedNo.SelectedValue.ToString());
             }
             catch (MyException MyEx)
             {
                 ok = false;
-                errP.SetError(txtAddDOB, MyEx.toString());
+                errP.SetError(cmbAddBreedNo, MyEx.toString());
             }
-
+            
             try
             {
-                myDog.Gender = txtAddGender.Text.Trim(); // passed to Dog class to check
+                myDog.Dob = dtpAddDOB.Text.Trim(); // passed to Dog class to check
             }
             catch (MyException MyEx)
             {
                 ok = false;
-                errP.SetError(txtAddGender, MyEx.toString());
+                errP.SetError(dtpAddDOB, MyEx.toString());
             }
 
             try
             {
-                myDog.Colour = txtAddColour.Text.Trim(); // passed to Dog class to check
+                myDog.Gender = cmbAddGender.Text.Trim();
+            }
+            catch (MyException MyEx)
+            {
+                ok = false;
+                errP.SetError(cmbAddGender, MyEx.toString());
+            }
+
+            try
+            {
+                myDog.Colour = txtAddColour.Text.Trim();
             }
             catch (MyException MyEx)
             {
@@ -177,6 +191,18 @@ namespace InTheDogHouse06FEBAttempt
                 errP.SetError(txtAddColour, MyEx.toString());
             }
 
+            //DROPDOWN FOR CUSTOMER NUMBER / NAME 
+            try
+            {
+                myDog.CustomerNo = Convert.ToInt32(cmbAddCustNo.Text.Substring(0, 5)); 
+            }
+            catch (MyException MyEx)
+            {
+                ok = false;
+                errP.SetError(cmbAddCustNo, MyEx.toString());
+            }
+
+            //ALL INPUT FIELDS PASS VALIDATION ABOVE. NOW TIME TO ASSIGN THIS DATA TO EACH SQL COLUMN HEADING BE:OW.
 
             try
             {
@@ -188,7 +214,8 @@ namespace InTheDogHouse06FEBAttempt
                     drDog["BreedNo"] = myDog.BreedNo;
                     drDog["DOB"] = myDog.Dob;
                     drDog["Gender"] = myDog.Gender;
-                    drDog["CustNo"] = myDog.CustomerNo;
+                    drDog["Colour"] = myDog.Colour;
+                    drDog["CustomerNo"] = myDog.CustomerNo;
 
                     dsInTheDogHouse.Tables["Dog"].Rows.Add(drDog);
                     daDog.Update(dsInTheDogHouse, "Dog");
@@ -201,7 +228,7 @@ namespace InTheDogHouse06FEBAttempt
                         getNumber(dsInTheDogHouse.Tables["Dog"].Rows.Count);
                     }
                     else
-                        tabControl.SelectedIndex = 0;
+                        tabDog.SelectedIndex = 0;
 
                 }
             }
@@ -213,9 +240,9 @@ namespace InTheDogHouse06FEBAttempt
         }
         void clearAddForm()
         {
-            cboCustNo.SelectedIndex = -1; //ADD NEW FIELDS 
-            txtAddDOB.Clear();
-            txtAddGender.Clear();
+            cmbAddCustNo.SelectedIndex = -1; //ADD NEW FIELDS 
+            //cmbAddBreedNo.Clear();
+            //cmbAddGender.Clear();
             txtAddColour.Clear();
         }
 
@@ -225,18 +252,18 @@ namespace InTheDogHouse06FEBAttempt
             lblAddDogNumber.Text = (int.Parse(drDog["DogNo"].ToString()) + 1).ToString();
         }      
 
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {   //CHANGED 08FEB 22:13 REVERTPOINTSB
-            selectedTab = tabControl.SelectedIndex;
+        private void tabDog_SelectedIndexChanged(object sender, EventArgs e)
+        {   
+            selectedTab = tabDog.SelectedIndex;
 
-            tabControl.TabPages[tabControl.SelectedIndex].Focus();
-            tabControl.TabPages[tabControl.SelectedIndex].CausesValidation = true;
+            tabDog.TabPages[tabDog.SelectedIndex].Focus();
+            tabDog.TabPages[tabDog.SelectedIndex].CausesValidation = true;
 
-            //if (dgvDog.SelectedRows.Count == 0 && tabDogDisplay.SelectedIndex == 2)
-            // tabDogDisplay.TabPages[tabDogs.SelectedIndex].CausesValidation = true;
+            //if (dgvDog.SelectedRows.Count == 0 && tabDog.SelectedIndex == 2) //21FEB 1157
+            // tabDog.TabPages[tabDog.SelectedIndex].CausesValidation = true;
             //else 
             //{
-            switch (tabControl.SelectedIndex)
+            switch (tabDog.SelectedIndex)
             {
                 case 0: //Display tab selected
                     {
@@ -265,7 +292,7 @@ namespace InTheDogHouse06FEBAttempt
                     {
                         if (dogNoSelected == 0)
                         {
-                            tabControl.SelectedIndex = 0;
+                            tabDog.SelectedIndex = 0;
                             break;
                         }
                         else
@@ -274,21 +301,30 @@ namespace InTheDogHouse06FEBAttempt
 
                             drDog = dsInTheDogHouse.Tables["Dog"].Rows.Find(lblEditDogNumber.Text);
 
-                            //if (drDog["Title"].ToString() == "Mr") //CHANGE FIELDS 
-                            //  cboEditTitle.SelectedIndex = 0;
-                            //if (drDog["Title"].ToString() == "Mrs")
-                            //    cboEditTitle.SelectedIndex = 1;
-                            //if (drDog["Title"].ToString() == "Miss")
-                            //    cboEditTitle.SelectedIndex = 2;
-                            //if (drDog["Title"].ToString() == "Ms")
-                            //    cboEditTitle.SelectedIndex = 3;
+                            if (drDog["Gender"].ToString() == "M")
+                                cmbEditGender.SelectedIndex = 0;
+                            if (drDog["Gender"].ToString() == "F")
+                                cmbEditGender.SelectedIndex = 1;
 
                             txtEditName.Text = drDog["Name"].ToString();
-                            cboEditBreedNo.Text = drDog["BreedNo"].ToString();
-                            txtEditDOB.Text = drDog["DOB"].ToString();
-                            txtEditGender.Text = drDog["Gender"].ToString();
                             txtEditColour.Text = drDog["Colour"].ToString();
-                            cboEditCustNo.Text = drDog["CustomerNo"].ToString();
+
+                            //drDog = dsInTheDogHouse.Tables["Breed"].NewRow(); //ADDED 20FEB
+
+                            //cmbEditBreedNo.Text = drDog["BreedNo"].ToString();
+                            //cmbEditGender.Text = drDog["Gender"].ToString();
+                            //cmbEditCustNo.Text = drDog["CustomerNo"].ToString();
+
+                            DataRow temp = dsInTheDogHouse.Tables["Breed"].Rows.Find(Convert.ToInt32(drDog["BreedNo"].ToString()));
+                            cmbEditBreedNo.SelectedIndex = cmbEditBreedNo.FindStringExact(temp["BreedName"].ToString());
+
+                            dtpEditDOB.Value = Convert.ToDateTime(drDog["DOB"].ToString());
+
+                            temp = 
+                                dsInTheDogHouse.Tables["Customer"].Rows.Find(Convert.ToInt32(drDog["CustomerNo"].ToString()));
+
+                                    cmbEditCustNo.SelectedIndex =
+                                cmbEditCustNo.FindStringExact(temp["CustomerNo"] + "(" + temp["Surname"] + "," + temp["Forename"] + ")");
 
                             break;
                         }
@@ -330,12 +366,12 @@ namespace InTheDogHouse06FEBAttempt
 
         private void frmDog_Shown(object sender, EventArgs e)
         {
-            tabControl.TabPages[0].CausesValidation = true;
-            tabControl.TabPages[0].Validating += new
+            tabDog.TabPages[0].CausesValidation = true;
+            tabDog.TabPages[0].Validating += new
                 CancelEventHandler(AddTabValidate);
 
-            tabControl.TabPages[0].CausesValidation = true;
-            tabControl.TabPages[0].Validating += new
+            tabDog.TabPages[0].CausesValidation = true;
+            tabDog.TabPages[0].Validating += new
                 CancelEventHandler(EditTabValidate);
         }
 
@@ -345,11 +381,10 @@ namespace InTheDogHouse06FEBAttempt
             {
                 lblEditDogNo.Enabled = true;
                 txtEditName.Enabled = true;
-                cboEditBreedNo.Enabled = true;
-                txtEditDOB.Enabled = true;
-                txtEditGender.Enabled = true;
+                cmbEditBreedNo.Enabled = true;
+                cmbEditGender.Enabled = true;
                 txtEditColour.Enabled = true;
-                cboEditCustNo.Enabled = true;
+                cmbEditCustNo.Enabled = true;
 
                 btnEditEdit.Text = "Save"; //different bc i have a button not a button and separate label as in example code
             }
@@ -382,32 +417,32 @@ namespace InTheDogHouse06FEBAttempt
 
                 try
                 {
-                    myDog.BreedNo = cboEditBreedNo.Text.Trim(); //passed to Dog class to check 
+                    myDog.BreedNo = Convert.ToInt32(cmbEditBreedNo.SelectedValue.ToString());
                 }
                 catch (MyException MyEx)
                 {
                     ok = false;
-                    errP.SetError(cboEditBreedNo, MyEx.toString());
+                    errP.SetError(cmbEditBreedNo, MyEx.toString());
                 }
 
                 try
                 {
-                    myDog.Dob = txtEditDOB.Text.Trim(); //passed to Dog class to check 
+                    myDog.Dob = dtpEditDOB.Text.Trim(); //passed to Dog class to check 
                 }
                 catch (MyException MyEx)
                 {
                     ok = false;
-                    errP.SetError(txtEditDOB, MyEx.toString());
+                    errP.SetError(dtpEditDOB, MyEx.toString());
                 }
 
                 try
                 {
-                    myDog.Gender = txtEditGender.Text.Trim(); //passed to Dog class to check 
+                    myDog.Gender = cmbEditGender.Text.Trim(); //passed to Dog class to check 
                 }
                 catch (MyException MyEx)
                 {
                     ok = false;
-                    errP.SetError(txtEditGender, MyEx.toString());
+                    errP.SetError(cmbEditGender, MyEx.toString());
                 }
 
                 try
@@ -422,12 +457,12 @@ namespace InTheDogHouse06FEBAttempt
 
                 try
                 {
-                    myDog.CustomerNo = cboEditCustNo.Text.Trim(); //passed to Dog class to check 
+                    myDog.CustomerNo = Convert.ToInt32(cmbEditCustNo.Text.Substring(0, 5));
                 }
                 catch (MyException MyEx)
                 {
                     ok = false;
-                    errP.SetError(cboEditCustNo, MyEx.toString());
+                    errP.SetError(cmbEditCustNo, MyEx.toString());
                 }
 
                 try
@@ -452,14 +487,13 @@ namespace InTheDogHouse06FEBAttempt
 
                         lblEditDogNo.Enabled = false;
                         txtEditName.Enabled = false;
-                        cboEditBreedNo.Enabled = false;
-                        txtEditDOB.Enabled = false;
-                        txtEditGender.Enabled = false;
+                        cmbEditBreedNo.Enabled = false;
+                        cmbEditGender.Enabled = false;
                         txtEditColour.Enabled = false;
-                        cboEditCustNo.Enabled = false;
+                        cmbEditCustNo.Enabled = false;
 
                         btnEditEdit.Text = "Edit"; //MAY NEED CHANGED FOR MY BUTTONS
-                        tabControl.SelectedIndex = 0;
+                        tabDog.SelectedIndex = 0;
 
                     }
                 }
@@ -489,7 +523,7 @@ namespace InTheDogHouse06FEBAttempt
                 bool found = false; //short term variable for this section only 
 
                 //CHECK if customer number is in Booking, therefore it has associated records... 
-                foreach (DataRow dr in dsInTheDogHouse.Tables["Booking"].Rows)  //for each data row in this table..repeat
+                foreach (DataRow dr in dsInTheDogHouse.Tables["Dog"].Rows)  //for each data row in this table..repeat
                 {
                     if (dr["DogNo"] == dgvDog.SelectedRows[0].Cells[0].Value) //if DogNo matches any record in Booking
                     {
@@ -507,7 +541,7 @@ namespace InTheDogHouse06FEBAttempt
                 }
                 if (found = true) //now, if it did find something... Stop and show a message box 
                 {
-                    MessageBox.Show("Cannot delete this record - this customer has Bookings and/or Pets against their name.", "Denied!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Cannot delete this record - this dog has associated appointment records in the system.", "Denied!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
                 else //otherwise proceed to delete...
@@ -527,32 +561,16 @@ namespace InTheDogHouse06FEBAttempt
         private void btnAddCancel_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Cancel the addition of Dog No: " + lblAddDogNumber.Text + "?", "Add Dog", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                tabControl.SelectedIndex = 0;
+                tabDog.SelectedIndex = 0;
         }
 
         private void btnDisplayAdd_Click(object sender, EventArgs e)
         {
-            tabControl.SelectedIndex = 1; //CHANGED FEB08 22:45 REVERTPOINT SB
+            tabDog.SelectedIndex = 1; //CHANGED FEB08 22:45 REVERTPOINT SB
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabEdit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cboEditBreedNo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnDisplayEdit_Click(object sender, EventArgs e)
         {
-            tabControl.SelectedIndex = 2;
+            tabDog.SelectedIndex = 2;
         }
         private void dgvDog_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -564,15 +582,10 @@ namespace InTheDogHouse06FEBAttempt
             this.Close(); //closes the form
         }
 
-        private void lblAddDogNumber_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnEditCancel_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Cancel the edit of Dog No: " + lblEditDogNumber.Text + "?", "Edit Dog", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                tabControl.SelectedIndex = 0;
+                tabDog.SelectedIndex = 0;
         }
     }
 }

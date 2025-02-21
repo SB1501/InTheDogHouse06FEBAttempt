@@ -63,22 +63,6 @@ namespace InTheDogHouse06FEBAttempt //Namespace ensures it's part of the same pr
             return ok; //only returns true if each character is a letter
         }
 
-           public static bool validDate(string dateString) //CUSTOM DATE VALID METHOD
-        {
-            bool ok = true;
-
-            if (dateString.Trim().Length == 0) //checks if value is null
-            {
-                ok = false;
-            }
-            else
-            {
-                DateTime parsedDate; //new parsed date variable. Below checks it's the right format. 
-                ok = DateTime.TryParseExact(dateString, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate);
-            }
-            return ok; //only true if it passes the test 
-        }
-
         public static bool validLetterWhitespace(string txt) //allows alphabetic characters and whitespace 
         {
             bool ok = true;
