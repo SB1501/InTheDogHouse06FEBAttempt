@@ -18,7 +18,7 @@ namespace InTheDogHouse06FEBAttempt
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmDog()); //CHANGE FOR NOW TO GO BETWEEN frmCustomer and frmDog
+            Application.Run(new frmBooking()); //CHANGE FOR NOW TO GO BETWEEN frmCustomer and frmDog
         }
     }
 }
