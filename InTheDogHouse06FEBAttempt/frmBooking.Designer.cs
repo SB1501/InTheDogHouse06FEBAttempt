@@ -59,6 +59,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pnlListViews = new System.Windows.Forms.Panel();
+            this.lvwBooking = new System.Windows.Forms.ListView();
             this.lstCustomer = new System.Windows.Forms.ListBox();
             this.lstDog = new System.Windows.Forms.ListBox();
             this.lstKennel = new System.Windows.Forms.ListBox();
@@ -77,7 +78,6 @@
             this.btnAddItem = new System.Windows.Forms.Button();
             this.lblBookedDate = new System.Windows.Forms.Label();
             this.lblCustomerNo = new System.Windows.Forms.Label();
-            this.lvwBooking = new System.Windows.Forms.ListBox();
             this.pnlBooking = new System.Windows.Forms.Panel();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.cmbNoOfDays = new System.Windows.Forms.ComboBox();
@@ -85,6 +85,9 @@
             this.lblStartDate = new System.Windows.Forms.Label();
             this.pnlCustomer = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.dogNo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.kennelNo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlButtons.SuspendLayout();
             this.pnlListViews.SuspendLayout();
@@ -366,6 +369,20 @@
             this.pnlListViews.Size = new System.Drawing.Size(1070, 300);
             this.pnlListViews.TabIndex = 6;
             // 
+            // lvwBooking
+            // 
+            this.lvwBooking.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.dogNo,
+            this.name,
+            this.kennelNo});
+            this.lvwBooking.HideSelection = false;
+            this.lvwBooking.Location = new System.Drawing.Point(437, 184);
+            this.lvwBooking.Name = "lvwBooking";
+            this.lvwBooking.Size = new System.Drawing.Size(416, 179);
+            this.lvwBooking.TabIndex = 6;
+            this.lvwBooking.UseCompatibleStateImageBehavior = false;
+            this.lvwBooking.View = System.Windows.Forms.View.Details;
+            // 
             // lstCustomer
             // 
             this.lstCustomer.Enabled = false;
@@ -548,15 +565,6 @@
             this.lblCustomerNo.TabIndex = 0;
             this.lblCustomerNo.Text = "Customer No";
             // 
-            // lvwBooking
-            // 
-            this.lvwBooking.FormattingEnabled = true;
-            this.lvwBooking.ItemHeight = 25;
-            this.lvwBooking.Location = new System.Drawing.Point(437, 184);
-            this.lvwBooking.Name = "lvwBooking";
-            this.lvwBooking.Size = new System.Drawing.Size(416, 179);
-            this.lvwBooking.TabIndex = 6;
-            // 
             // pnlBooking
             // 
             this.pnlBooking.Controls.Add(this.dtpStartDate);
@@ -618,11 +626,23 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // dogNo
+            // 
+            this.dogNo.Text = "Dog No";
+            // 
+            // name
+            // 
+            this.name.Text = "Name";
+            // 
+            // kennelNo
+            // 
+            this.kennelNo.Text = "Kennel No";
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1291, 1063);
+            this.ClientSize = new System.Drawing.Size(1291, 1079);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.pnlListViews);
             this.Controls.Add(this.pnlButtons);
@@ -630,6 +650,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel2);
             this.Name = "frmBooking";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmBooking";
             this.Load += new System.EventHandler(this.frmBooking_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -660,7 +681,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblBookedDate;
         private System.Windows.Forms.Label lblCustomerNo;
-        private System.Windows.Forms.ListBox lvwBooking;
+        private System.Windows.Forms.ListView lvwBooking;
         private System.Windows.Forms.Button btnRemoveItem;
         private System.Windows.Forms.Button btnAddItem;
         private System.Windows.Forms.Label lblNoOfDays;
@@ -704,5 +725,8 @@
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button button26;
         private System.Windows.Forms.Panel pnlCustomer;
+        private System.Windows.Forms.ColumnHeader dogNo;
+        private System.Windows.Forms.ColumnHeader name;
+        private System.Windows.Forms.ColumnHeader kennelNo;
     }
 }

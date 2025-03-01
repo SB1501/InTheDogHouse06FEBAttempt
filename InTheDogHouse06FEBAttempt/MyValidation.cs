@@ -44,7 +44,7 @@ namespace InTheDogHouse06FEBAttempt //Namespace ensures it's part of the same pr
 
         }
 
-        public static bool validLetter(string txt) //allows alphabetic characters
+        public static bool validLetter(string txt) //allows alphabetic characters and ampersands
         {
             bool ok = true;
 
@@ -56,14 +56,14 @@ namespace InTheDogHouse06FEBAttempt //Namespace ensures it's part of the same pr
             {
                 for (int x = 0; x < txt.Length; x++) //for each letter passed...
                 {
-                    if (!(char.IsLetter(txt[x]))) //check character by character if its' a letter
+                    if (!(char.IsLetter(txt[x])) && txt[x] != '&') //check character by character if it's a letter or ampersand
                         ok = false;
                 }
             }
-            return ok; //only returns true if each character is a letter
+            return ok; //only returns true if each character is a letter or ampersand
         }
 
-        public static bool validLetterWhitespace(string txt) //allows alphabetic characters and whitespace 
+        public static bool validLetterWhitespace(string txt) //allows alphabetic characters, whitespace, and ampersands
         {
             bool ok = true;
 
@@ -74,15 +74,15 @@ namespace InTheDogHouse06FEBAttempt //Namespace ensures it's part of the same pr
             else
             {
                 for (int x = 0; x < txt.Length; x++) //checks character by character
-                {       //if it's NOT ! a letter...           ...or NOT ! whitespace...     ...or NOT ! number...
-                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(char.IsNumber(txt[x])))
+                {       //if it's NOT ! a letter...           ...or NOT ! whitespace...     ...or NOT ! ampersand...
+                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && txt[x] != '&')
                         ok = false;
                 }
             }
             return ok;
         }
 
-        public static bool validLetterNumberWhitespace(string txt) //allows alphanumeric and whitespace
+        public static bool validLetterNumberWhitespace(string txt) //allows alphanumeric, whitespace, and ampersands
         {
             bool ok = true;
 
@@ -94,7 +94,7 @@ namespace InTheDogHouse06FEBAttempt //Namespace ensures it's part of the same pr
             {
                 for (int x = 0; x < txt.Length; x++)
                 {
-                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(char.IsNumber(txt[x])))
+                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(char.IsNumber(txt[x])) && txt[x] != '&')
                         ok = false;
                 }
             }

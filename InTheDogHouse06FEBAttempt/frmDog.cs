@@ -62,7 +62,7 @@ namespace InTheDogHouse06FEBAttempt
 
         private void frmDog_Load(object sender, EventArgs e)
         {                                           //UPDATE PIPE IF CONNECTION ISSUE OCCURS
-            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#A84B94C4\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
+            string SqlConnectionStringBuilder = @"Data Source =np:\\.\pipe\LOCALDB#16B7BC88\tsql\query;Initial Catalog = InTheDogHouse; Integrated Security = true";
 
             //SELECT Dog table
             string sqlDog = @"SELECT * FROM Dog";

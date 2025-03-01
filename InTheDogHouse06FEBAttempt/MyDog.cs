@@ -86,12 +86,12 @@ namespace InTheDogHouse06FEBAttempt
             get { return colour; }
             set
             {
-                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterWhitespace(value))
+                if (MyValidation.validLength(value, 2, 30) && MyValidation.validLetterWhitespace(value))
                 {
                     colour = MyValidation.firstLetterEachWordToUpper(value);
                 }
                 else
-                    throw new MyException("Colour must be 2-20 letters");
+                    throw new MyException("Colour must be 2-30 letters");
             }
         }
 

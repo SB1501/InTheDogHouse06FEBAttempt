@@ -53,7 +53,7 @@ namespace InTheDogHouse06FEBAttempt
 
 
             //FILL IN PIPE HERE 
-            connStr = @"Data Source = np:\\.\pipe\LOCALDB#4A800734\tsql\query; Initial Catalog = InTheDogHouse; Integrated Security = true";
+            connStr = @"Data Source = np:\\.\pipe\LOCALDB#16B7BC88\tsql\query; Initial Catalog = InTheDogHouse; Integrated Security = true";
             //connStr = Properties.Resources.connectionStr;
 
             //get surnames for alphabet buttons
@@ -183,50 +183,56 @@ namespace InTheDogHouse06FEBAttempt
             
         }
 
-        private void lstCustomer_Click(object sender, EventArgs e) {
-
-            
-
-                String title = "";
-
+        private void lstCustomer_Click(object sender, EventArgs e)
+        {
+            if (lstCustomer.SelectedIndex == -1)
+            {
+                // No item is selected, clear the dog list and customer details
                 dsInTheDogHouse.Tables["Dog"].Clear();
+                ClearCustomer();
+                pnlBooking.Enabled = false;
+                return;
+            }
 
-                //get all dog details for listbox
-                cmdDogDetails.Parameters["@CustNo"].Value = lstCustomer.SelectedValue;
+            String title = "";
 
-                daDogs.Fill(dsInTheDogHouse, "Dog");
+            dsInTheDogHouse.Tables["Dog"].Clear();
 
-                //fill listbox
-                lstDog.DataSource = dsInTheDogHouse.Tables["Dog"];
-                lstDog.DisplayMember = "name";
-                lstDog.ValueMember = "breedNo";
+            // get all dog details for listbox
+            cmdDogDetails.Parameters["@CustNo"].Value = lstCustomer.SelectedValue;
 
-                lstDog.SelectedIndex = -1;
+            daDogs.Fill(dsInTheDogHouse, "Dog");
 
-                drCustomer = dsInTheDogHouse.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
+            // fill listbox
+            lstDog.DataSource = dsInTheDogHouse.Tables["Dog"];
+            lstDog.DisplayMember = "name";
+            lstDog.ValueMember = "breedNo";
 
-                if (drCustomer["Title"].ToString() == "Mr")
-                    title = "Mr";
-                if (drCustomer["Title"].ToString() == "Mrs")
-                    title = "Mrs";
-                if (drCustomer["Title"].ToString() == "Miss")
-                    title = "Miss";
-                if (drCustomer["Title"].ToString() == "Ms")
-                    title = "Ms";
+            lstDog.SelectedIndex = -1;
 
-                lblCust0.Text = drCustomer["CustomerNo"].ToString();
-                lblCust1.Text = title + " " + drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString();
-                lblCust2.Text = drCustomer["Street"].ToString();
-                lblCust3.Text = drCustomer["Town"].ToString();
-                lblCust4.Text = drCustomer["County"].ToString();
-                lblCust5.Text = drCustomer["Postcode"].ToString();
+            drCustomer = dsInTheDogHouse.Tables["Customer"].Rows.Find(lstCustomer.SelectedValue);
 
-            //clear booking list view when another customer is selected
+            if (drCustomer["Title"].ToString() == "Mr")
+                title = "Mr";
+            if (drCustomer["Title"].ToString() == "Mrs")
+                title = "Mrs";
+            if (drCustomer["Title"].ToString() == "Miss")
+                title = "Miss";
+            if (drCustomer["Title"].ToString() == "Ms")
+                title = "Ms";
+
+            lblCust0.Text = drCustomer["CustomerNo"].ToString();
+            lblCust1.Text = title + " " + drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString();
+            lblCust2.Text = drCustomer["Street"].ToString();
+            lblCust3.Text = drCustomer["Town"].ToString();
+            lblCust4.Text = drCustomer["County"].ToString();
+            lblCust5.Text = drCustomer["Postcode"].ToString();
+
+            // clear booking list view when another customer is selected
             ClearBooking();
 
-            //clear kennel as each customer is selected to prevent different customer dogs in same bookings
+            // clear kennel as each customer is selected to prevent different customer dogs in same bookings
             ClearKennel();
-
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
