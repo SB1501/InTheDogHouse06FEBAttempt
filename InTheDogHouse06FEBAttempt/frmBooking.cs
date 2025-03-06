@@ -53,7 +53,7 @@ namespace InTheDogHouse06FEBAttempt
 
 
             //FILL IN PIPE HERE 
-            connStr = @"Data Source = np:\\.\pipe\LOCALDB#16B7BC88\tsql\query; Initial Catalog = InTheDogHouse; Integrated Security = true";
+            connStr = @"Data Source = np:\\.\pipe\LOCALDB#E1E211DF\tsql\query; Initial Catalog = InTheDogHouse; Integrated Security = true";
             //connStr = Properties.Resources.connectionStr;
 
             //get surnames for alphabet buttons

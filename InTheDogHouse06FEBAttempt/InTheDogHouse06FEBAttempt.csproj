@@ -64,6 +64,12 @@
     <Compile Include="frmDog.Designer.cs">
       <DependentUpon>frmDog.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmEditDelBooking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditDelBooking.Designer.cs">
+      <DependentUpon>frmEditDelBooking.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyCustomer.cs" />
     <Compile Include="MyDog.cs" />
     <Compile Include="MyException.cs" />
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmDog.resx">
       <DependentUpon>frmDog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditDelBooking.resx">
+      <DependentUpon>frmEditDelBooking.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
